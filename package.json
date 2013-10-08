@@ -1,0 +1,36 @@
+{
+    "name": "jingle-webrtc",
+    "version": "0.0.1",
+    "description": "",
+    "main": "index.js",
+    "repository": {
+        "type": "git",
+        "url": "https://github.com/legastero/jingle-webrtc.git"
+    },
+    "keywords": [
+        "webrtc",
+        "xmpp",
+        "jingle"
+    ],
+    "contributors": [
+        "Lance Stout <lance@andyet.net>"
+    ],
+    "license": "MIT",
+    "dependencies": {
+        "async": "",
+        "webrtcsupport": "0.7.0",
+        "jingle-rtcpeerconnection": "0.2.0",
+        "sdp-jingle-json": "0.2.2",
+        "wildemitter": "0.0.5",
+        "getusermedia": "0.2.1",
+        "hark": "0.1.1",
+        "mediastream-gain": "0.1.0",
+        "mockconsole": "0.0.1",
+        "underscore": ""
+    },
+    "devDependencies": {
+        "precommit-hook": "0.3.8",
+        "uglify-js": "2.3.6",
+        "browserify": "2.25.1"
+    }
+}
