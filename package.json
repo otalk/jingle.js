@@ -26,7 +26,7 @@
         "hark": "0.1.1",
         "mediastream-gain": "0.1.0",
         "mockconsole": "0.0.1",
-        "underscore": ""
+        "underscore": "1.5.2"
     },
     "devDependencies": {
         "precommit-hook": "0.3.8",
