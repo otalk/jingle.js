@@ -1,11 +1,11 @@
 {
-    "name": "jingle-webrtc",
-    "version": "0.0.1",
+    "name": "jingle",
+    "version": "0.0.2",
     "description": "",
     "main": "index.js",
     "repository": {
         "type": "git",
-        "url": "https://github.com/legastero/jingle-webrtc.git"
+        "url": "https://github.com/legastero/jingle.js.git"
     },
     "keywords": [
         "webrtc",
@@ -17,7 +17,7 @@
     ],
     "license": "MIT",
     "dependencies": {
-        "async": "",
+        "async": "0.2.9",
         "webrtcsupport": "0.7.0",
         "jingle-rtcpeerconnection": "0.2.0",
         "sdp-jingle-json": "0.2.2",

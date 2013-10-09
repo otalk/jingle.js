@@ -93,7 +93,9 @@ MediaSession.prototype = _.extend(MediaSession.prototype, {
         }
     },
     onStreamRemoved: function () {
-        this.parent.peers.splice(this.parent.peers.indexOf(this), 1);
+        this.parent.peers[this.peer].splice(this.parent.peers[this.peer].indexOf(this), 1);
+        delete this.parent.sessions[this.sid];
+
         this.state = 'ended';
         this.parent.emit('peerStreamRemoved', this);
     }

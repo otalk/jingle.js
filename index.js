@@ -320,4 +320,12 @@ Jingle.prototype.createMediaSession = function (peer, sid) {
     return session;
 };
 
+Jingle.prototype.endPeerSessions = function (peer) {
+    var sessions = this.peers[peer] || [];
+    sessions.forEach(function (session) {
+        session.end();
+    });
+};
+
+
 module.exports = Jingle;
