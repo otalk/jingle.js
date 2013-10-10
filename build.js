@@ -6,7 +6,6 @@ var fs = require('fs');
 var bundle = browserify();
 bundle.add('./index');
 bundle.bundle({standalone: 'JingleWebRTC'}, function (err, js) {
-    //var result = UglifyJS.minify(js, {fromString: true}).code;
-    console.log(err);
-    fs.writeFileSync('jingle-webrtc.bundle.js', js);
+    var result = UglifyJS.minify(js, {fromString: true}).code;
+    fs.writeFileSync('jingle-webrtc.bundle.js', result);
 });
