@@ -1,6 +1,6 @@
 {
     "name": "jingle",
-    "version": "0.0.5",
+    "version": "0.0.6",
     "description": "",
     "main": "index.js",
     "repository": {
@@ -19,8 +19,8 @@
     "dependencies": {
         "async": "0.2.9",
         "webrtcsupport": "0.7.0",
-        "jingle-rtcpeerconnection": "0.2.1",
-        "sdp-jingle-json": "0.3.0",
+        "jingle-rtcpeerconnection": "0.2.3",
+        "sdp-jingle-json": "0.3.1",
         "wildemitter": "0.0.5",
         "getusermedia": "0.2.1",
         "hark": "0.1.1",
