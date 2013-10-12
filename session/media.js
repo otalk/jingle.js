@@ -70,7 +70,8 @@ MediaSession.prototype = _.extend(MediaSession.prototype, {
     onSessionAccept: function (changes, cb) {
         this.state = 'active';
         this.pc.handleAnswer({type: 'answer', json: changes}, function (err) {
-            cb(err);
+            console.log(err);
+            cb({condition: 'general-error'});
         });
     },
     onSessionTerminate: function (changes, cb) {
