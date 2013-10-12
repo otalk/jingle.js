@@ -1,7 +1,7 @@
 {
     "name": "jingle",
-    "version": "0.0.6",
-    "description": "",
+    "version": "0.0.7",
+    "description": "Generic Jingle via WebRTC session manager.",
     "main": "index.js",
     "repository": {
         "type": "git",
