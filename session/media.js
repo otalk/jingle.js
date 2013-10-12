@@ -62,7 +62,10 @@ MediaSession.prototype = _.extend(MediaSession.prototype, {
         this.state = 'pending';
         this.pc.isInitiator = false;
         this.pc.answer({type: 'offer', json: changes}, function (err, answer) {
-            if (err) return cb(err);
+            if (err) {
+                console.log(err);
+                return cb({condition: 'general-error'});
+            }
             self.pendingAnswer = answer.json;
             cb();
         });

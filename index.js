@@ -16,6 +16,7 @@ function Jingle(opts) {
     var config = this.config = {
         debug: false,
         peerConnectionConfig: {
+            iceServers: [{"url": "stun:stun.l.google.com:19302"}]
         },
         peerConnectionConstraints: {
             optional: [
