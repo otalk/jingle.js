@@ -3,7 +3,7 @@
 ## Example
 
     var conn = new RealtimeConnection(); // stanza.io, xmpp-ftw, strophe, etc
-    var jingle = new JingleWebRTC();
+    var jingle = new Jingle();
     var attachMediaStream = require('attachmediastream');
 
     jingle.on('localStream', function (stream) {
