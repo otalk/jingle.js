@@ -31,3 +31,15 @@
         var sess = jingle.createMediaSession('peer@example.com/resouce');
         sess.start();
     });
+
+## Bundle
+
+```
+node build
+```
+
+Builds a jingle.bundle.js file. A debug version can be built by adding a `-d` flag when building; this does not compress the code for easier debugging:
+
+```
+node build -d
+```
