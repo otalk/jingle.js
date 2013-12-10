@@ -32,6 +32,6 @@
     "devDependencies": {
         "precommit-hook": "0.3.8",
         "uglify-js": "2.3.6",
-        "browserify": "2.25.1"
+        "browserify": "2.36.1"
     }
 }
