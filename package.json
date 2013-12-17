@@ -1,6 +1,6 @@
 {
     "name": "jingle",
-    "version": "0.3.1",
+    "version": "0.3.2",
     "description": "Generic Jingle via WebRTC session manager.",
     "main": "index.js",
     "repository": {
@@ -20,7 +20,7 @@
         "async": "0.2.9",
         "bows": "0.2.0",
         "webrtcsupport": "0.7.1",
-        "jingle-rtcpeerconnection": "0.2.8",
+        "jingle-rtcpeerconnection": "0.2.9",
         "sdp-jingle-json": "1.0.0",
         "wildemitter": "0.0.5",
         "getusermedia": "0.2.1",
