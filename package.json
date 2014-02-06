@@ -1,37 +1,43 @@
 {
-    "name": "jingle",
-    "version": "0.3.4",
-    "description": "Generic Jingle via WebRTC session manager.",
-    "main": "index.js",
-    "repository": {
-        "type": "git",
-        "url": "https://github.com/legastero/jingle.js.git"
-    },
-    "keywords": [
-        "webrtc",
-        "xmpp",
-        "jingle"
-    ],
-    "contributors": [
-        "Lance Stout <lance@andyet.net>"
-    ],
-    "license": "MIT",
-    "dependencies": {
-        "async": "0.2.9",
-        "bows": "0.2.0",
-        "webrtcsupport": "0.7.1",
-        "jingle-rtcpeerconnection": "0.2.10",
-        "sdp-jingle-json": "1.0.0",
-        "wildemitter": "0.0.5",
-        "getusermedia": "0.2.1",
-        "hark": "0.1.1",
-        "mediastream-gain": "0.1.0",
-        "mockconsole": "0.0.1",
-        "underscore": "1.5.2"
-    },
-    "devDependencies": {
-        "precommit-hook": "0.3.8",
-        "uglify-js": "2.3.6",
-        "browserify": "2.36.1"
-    }
+  "name": "jingle",
+  "description": "Generic Jingle via WebRTC session manager.",
+  "version": "0.3.5",
+  "author": "Lance Stout <lance@andyet.net>",
+  "bugs": "https://github.com/legastero/jingle.js/issues",
+  "contributors": [
+    "Lloyd Watkin",
+    "Philipp Hancke"
+  ],
+  "dependencies": {
+    "async": "0.2.9",
+    "backbone": "1.0.0",
+    "bows": "0.2.0",
+    "getusermedia": "0.2.1",
+    "hark": "0.1.1",
+    "human-model": "",
+    "jingle-rtcpeerconnection": "0.2.10",
+    "mediastream-gain": "0.1.0",
+    "mockconsole": "0.0.1",
+    "sdp-jingle-json": "1.0.0",
+    "underscore": "1.5.2",
+    "webrtcsupport": "0.7.1",
+    "wildemitter": "1.0.1"
+  },
+  "devDependencies": {
+    "browserify": "2.36.1",
+    "precommit-hook": "0.3.8",
+    "uglify-js": "2.3.6"
+  },
+  "homepage": "https://github.com/legastero/jingle.js",
+  "keywords": [
+    "webrtc",
+    "xmpp",
+    "jingle"
+  ],
+  "license": "MIT",
+  "main": "index.js",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/legastero/jingle.js.git"
+  }
 }
