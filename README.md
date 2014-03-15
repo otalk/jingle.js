@@ -17,8 +17,8 @@
          conn.send(data);
     });
 
-    jingle.on('peerStreamAdded', function (session) {
-         attachMediaStream(session.stream, document.getElementById('remoteVideo'));
+    jingle.on('peerStreamAdded', function (session, stream) {
+         attachMediaStream(stream, document.getElementById('remoteVideo'));
     });
 
     // Answering a call request.
