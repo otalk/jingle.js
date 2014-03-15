@@ -32,14 +32,24 @@
         sess.start();
     });
 
-## Bundle
+## Installing
 
-```
-node build
+```sh
+$ npm install jingle
 ```
 
-Builds a jingle.bundle.js file. A debug version can be built by adding a `-d` flag when building; this does not compress the code for easier debugging:
+## Building bundled/minified version (for AMD, etc)
 
+```sh
+$ grunt
 ```
-node build -d
-```
+
+The bundled and minified files will be in the generated `build` directory.
+
+## License
+
+MIT
+
+## Created by
+
+If you like this, follow [@lancestout](http://twitter.com/lancestout) or [@hcornflower](http://twitter.com/hcornflower) on twitter.

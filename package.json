@@ -9,24 +9,26 @@
     "Philipp Hancke"
   ],
   "dependencies": {
-    "async": "0.2.9",
+    "async": "0.2.x",
     "backbone": "1.0.0",
-    "bows": "0.2.0",
-    "getusermedia": "0.2.1",
-    "hark": "0.1.1",
-    "human-model": "",
-    "jingle-rtcpeerconnection": "0.2.11",
-    "mediastream-gain": "0.1.0",
-    "mockconsole": "0.0.1",
-    "sdp-jingle-json": "1.0.0",
-    "underscore": "1.5.2",
-    "webrtcsupport": "0.7.1",
-    "wildemitter": "1.0.1"
+    "bows": "0.x",
+    "getusermedia": "0.2.x",
+    "hark": "0.1.x",
+    "mediastream-gain": "0.1.x",
+    "mockconsole": "0.0.x",
+    "rtcpeerconnection": "2.x",
+    "sdp-jingle-json": "1.x",
+    "underscore": "1.x",
+    "webrtcsupport": "0.7.x",
+    "wildemitter": "1.x"
   },
   "devDependencies": {
-    "browserify": "2.36.1",
-    "precommit-hook": "0.3.8",
-    "uglify-js": "2.3.6"
+    "browserify": "2.x",
+    "grunt": "0.4.x",
+    "grunt-browserify": "1.2.x",
+    "grunt-contrib-jshint": "0.7.x",
+    "grunt-contrib-uglify": "0.2.x",
+    "precommit-hook": "0.3.x"
   },
   "homepage": "https://github.com/legastero/jingle.js",
   "keywords": [
