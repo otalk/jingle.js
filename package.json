@@ -9,11 +9,10 @@
     "Philipp Hancke"
   ],
   "dependencies": {
-    "async": "0.2.x",
-    "backbone": "1.0.0",
+    "async": "0.7.x",
     "bows": "0.x",
     "getusermedia": "0.2.x",
-    "hark": "0.1.x",
+    "hark": "0.2.x",
     "mediastream-gain": "0.1.x",
     "mockconsole": "0.0.x",
     "rtcpeerconnection": "2.x",
@@ -23,12 +22,12 @@
     "wildemitter": "1.x"
   },
   "devDependencies": {
-    "browserify": "2.x",
+    "browserify": "3.x",
     "grunt": "0.4.x",
-    "grunt-browserify": "1.2.x",
-    "grunt-contrib-jshint": "0.7.x",
-    "grunt-contrib-uglify": "0.2.x",
-    "precommit-hook": "0.3.x"
+    "grunt-browserify": "2.x",
+    "grunt-contrib-jshint": "0.10.x",
+    "grunt-contrib-uglify": "0.4.x",
+    "precommit-hook": "0.4.x"
   },
   "homepage": "https://github.com/legastero/jingle.js",
   "keywords": [
