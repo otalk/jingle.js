@@ -1,4 +1,4 @@
-"use strict";
+'use strict';
 
 module.exports = function (grunt) {
     grunt.initConfig({
@@ -32,6 +32,7 @@ module.exports = function (grunt) {
     grunt.loadNpmTasks('grunt-browserify');
     grunt.loadNpmTasks('grunt-contrib-uglify');
     grunt.loadNpmTasks('grunt-contrib-jshint');
+    grunt.loadNpmTasks('grunt-nsp-package');
 
-    grunt.registerTask('default', ['jshint', 'browserify', 'uglify']);
+    grunt.registerTask('default', ['jshint', 'browserify', 'uglify', 'validate-package']);
 };
