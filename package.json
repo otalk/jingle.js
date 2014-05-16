@@ -9,7 +9,7 @@
     "Philipp Hancke"
   ],
   "dependencies": {
-    "async": "0.7.x",
+    "async": "0.8.x",
     "bows": "0.x",
     "getusermedia": "0.2.x",
     "hark": "0.2.x",
