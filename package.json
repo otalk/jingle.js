@@ -12,7 +12,7 @@
     "async": "0.8.x",
     "bows": "0.x",
     "getusermedia": "0.2.x",
-    "hark": "0.2.x",
+    "hark": "^1.0.0",
     "mediastream-gain": "0.1.x",
     "mockconsole": "0.0.x",
     "rtcpeerconnection": "2.x",
