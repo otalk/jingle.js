@@ -3,7 +3,7 @@
   "description": "Generic Jingle via WebRTC session manager.",
   "version": "0.5.1",
   "author": "Lance Stout <lance@andyet.net>",
-  "bugs": "https://github.com/legastero/jingle.js/issues",
+  "bugs": "https://github.com/otalk/jingle.js/issues",
   "contributors": [
     "Lloyd Watkin",
     "Philipp Hancke"
@@ -45,7 +45,7 @@
     "tape": "2.x",
     "uglify-js": "2.x"
   },
-  "homepage": "https://github.com/legastero/jingle.js",
+  "homepage": "https://github.com/otalk/jingle.js",
   "keywords": [
     "webrtc",
     "xmpp",
@@ -55,7 +55,7 @@
   "main": "index.js",
   "repository": {
     "type": "git",
-    "url": "https://github.com/legastero/jingle.js.git"
+    "url": "https://github.com/otalk/jingle.js.git"
   },
   "scripts": {}
 }
