@@ -5,8 +5,9 @@
     var conn = new RealtimeConnection(); // stanza.io, xmpp-ftw, strophe, etc
     var jingle = new Jingle();
     var attachMediaStream = require('attachmediastream');
+    var localMedia = require('localMedia');
 
-    jingle.on('localStream', function (stream) {
+    localMedia.on('localStream', function (stream) {
         attachMediaStream(stream, document.getElementById('localVideo'), {
             mirror: true,
             muted: true
@@ -23,12 +24,15 @@
 
     // Answering a call request.
     jingle.on('incoming', function (session) {
+         // attach a media stream if desired
+         // session.addStream(localMedia.localStream);
          session.accept(); // Or display an incoming call banner, etc
     });
 
     // Starting an A/V session.
-    jingle.startLocalMedia(null, function () {
+    localMedia.start(null, function (stream) {
         var sess = jingle.createMediaSession('peer@example.com/resouce');
+        sess.addStream(stream);
         sess.start();
     });
 
