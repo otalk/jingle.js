@@ -1,7 +1,7 @@
 {
   "name": "jingle",
   "description": "Generic Jingle via WebRTC session manager.",
-  "version": "1.0.3",
+  "version": "1.1.0",
   "author": "Lance Stout <lance@andyet.net>",
   "bugs": "https://github.com/otalk/jingle.js/issues",
   "contributors": [
