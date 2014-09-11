@@ -234,7 +234,39 @@ The `BaseSession` class is intended to be a common base for covering the general
 #### `session.process(action, data, cb)`
 #### `session.send(action, data)`
 #### `session.start()`
+
+Initiate a the session request to the peer. Calling this method will move the session from the `starting` state to `pending`, and will trigger an `outgoing` event on the session manager.
+
+The session should have been added to the session manager with `.addSession()` before calling `.start()`.
+
+```js
+var session = new MyCustomSession({
+    peer: 'otheruser@theirdomain.example',
+    initiator: true
+});
+
+manager.addSession(session);
+manager.on('outgoing', function (sess) {
+    console.log('Outgoing session:', sess.sid === session.sid);
+});
+
+session.start();
+// -> Outgoing session: true
+```
+
 #### `session.accept()`
+
+Moves the session to the `active` state, and sends a `session-accept` action.
+
+For a `BaseSession` instance, this actually calls `.end('unsupported-applications')`.
+
+```js
+manager.on('incoming', function (session) {
+    // Auto-accept an incoming session
+    session.accept();
+});
+```
+
 #### `session.cancel()`
 
 This is a shortcut for calling `session.end('cancel')`.
