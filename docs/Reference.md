@@ -233,11 +233,42 @@ The `BaseSession` class is intended to be a common base for covering the general
 ### `BaseSession` Methods
 #### `session.process(action, data, cb)`
 #### `session.send(action, data)`
+
+- `action` - The session action the peer should perform based on this request.
+- `data` - Information to insert into the `jingle` section of the packet. The `sid` and `action` fields will be automatically set.
+
+Emits a `send` event for a new Jingle packet:
+
+```
+// Send a session terminate message directly:
+session.send('session-terminate', {
+    reason: {
+        condition: 'gone'
+    }
+});
+
+// emitted send event: {
+    to: 'otherpeer@theirdomain.example',
+    type: 'set',
+    jingle: {
+        sid: 'sid123',
+
+        // the provided action:
+        action: 'session-terminate',
+
+        // the provided data:
+        reason: {
+            condition: 'gone'
+        }
+    }
+}
+```
+
 #### `session.start()`
 
 Initiate a the session request to the peer. Calling this method will move the session from the `starting` state to `pending`, and will trigger an `outgoing` event on the session manager.
 
-The session should have been added to the session manager with `.addSession()` before calling `.start()`.
+The session should have been added to the session manager with [`.addSession()`](#manageraddsessionsession) before calling `.start()`.
 
 ```js
 var session = new MyCustomSession({
