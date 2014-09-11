@@ -38,7 +38,7 @@ Creates a new Jingle session manager with the following configuration options:
 
 - `jid` - The JID for the entity running the session manager. May be either a `{String}` or [`{JID}`](https://github.com/otalk/xmpp-jid).
 - `selfID` - An alternative to `jid`, which MUST be a `{String}`.
-- `iceServers` - An array of known ICE servers. See [`addICEServer()`] for the required format of each item.
+- `iceServers` - An array of known ICE servers. See [`addICEServer()`](#manageraddiceserverinfo) for the required format of each item.
 - `prepareSession` - [See below for how `prepareSession` works](#preparesessionopts-req)
 
 ```js
@@ -86,6 +86,23 @@ new Jingle.SessionManager({
 
 ### `SessionManager` Methods
 #### `manager.addICEServer(info)`
+
+- `info` - Either a `{String}` of the URI of the ICE server, or an object:
+    - `url` - The URI of the ICE server
+    - `username` - The username for accessing the ICE server
+    - `credential` - The password or other shared secret to authenticate the `username` with the ICE server
+
+Saves the URI and any required credentials for an ICE STUN/TURN server for use by *future* sessions.
+
+```js
+manager.addICEServer('stun:stun.l.google.com:19302');
+manager.addICEServer({
+    url: 'stun:stun.mydomain.example',
+    username: 'ad24lwra',
+    credential: '234lamvnerl13k40au35oahfadad'
+});
+```
+
 #### `manager.addSession(session)`
 #### `manager.endPeerSessions(peer, [reason], [silent])`
 #### `manager.endAllSessions([reason], [silent])`
