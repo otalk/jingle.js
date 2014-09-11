@@ -168,3 +168,17 @@ test('Add ICE server', function (t) {
 
     t.end();
 });
+
+test('Add ICE server as just a string', function (t) {
+    var jingle = new SessionManager({
+        jid: 'zuser@example.com'
+    });
+
+    jingle.addICEServer('turn:example.com');
+   
+    t.same(jingle.iceServers, [
+        {url: 'turn:example.com'}
+    ]);
+
+    t.end();
+});
