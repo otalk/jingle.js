@@ -198,9 +198,38 @@ manager.process({
 #### `log:[error|debug|info]`
 
 ## `Jingle.BaseSession`
+
+The `BaseSession` class is intended to be a common base for covering the general requirements of a Jingle session. Subclasses of `BaseSession` are needed to actually do interesting things, such as media or file transfer.
+
 ### `new BaseSession(opts)`
-### `BaseSession` Options
+
+- `opts` - An object summarizing the information in the session initiate request, suitable for passing directly to a session class constructor:
+    - `sid` - The ID for the session, as provided by the initiating peer.
+    - `peer` - The JID for the initiating peer (may be either a `{String}` or [`{JID}`](https://github.com/otalk/xmpp-jid)).
+    - `peerID` - An alternative to `peer`, which MUST be a `{String}` (derived from `peer`).
+    - `initiator` - This will always be `false`, as we are the one receiving the initiation request.
+    - `descriptionTypes` - An array of content description names.
+    - `transportTypes` - An array of content transport names.
+
 ### `BaseSession` Properties
+
+- `sid`
+- `peer`
+- `peerID`
+- `state`
+- `connectionState`
+- `pendingAction`
+- `pendingDescriptionTypes`
+- `isInitiator`
+- `isStarting`
+- `isPending`
+- `isActive`
+- `isEnded`
+- `isConnecting`
+- `isConnected`
+- `isDisconnected`
+- `isInterrupted`
+
 ### `BaseSession` Methods
 #### `session.process(action, data, cb)`
 #### `session.send(action, data)`
@@ -210,9 +239,13 @@ manager.process({
 
 This is a shortcut for calling `session.end('cancel')`.
 
+Calling `session.cancel()` should only be done after initiating the session and before it is accepted by the peer. After that point, calling `session.end()` is more appropriate.
+
 #### `session.decline()`
 
 This is a shortcut for calling `session.end('decline')`.
+
+Calling `session.decline()` should only be done after receiving a session initiation request and before (or rather, instead of) accepting the session.
 
 #### `session.end([reason], [silent])`
 
@@ -221,6 +254,8 @@ This is a shortcut for calling `session.end('decline')`.
     - `text` - A freeform description of the reason
     - `alternativeSession` - If the condition is `alternative-session`, this is the `sid` value for that session.
 - `silent` - If `true`, the session terminate message will not be generated to be sent to the peer.
+
+Once `.end()` is called, the session moves to the `ended` state.
 
 The list of valid `reason` (or `reason.condition`) values:
 
