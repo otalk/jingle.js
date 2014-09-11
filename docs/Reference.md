@@ -130,7 +130,7 @@ manager.addSession(session);
 
 #### `manager.endAllSessions([reason], [silent])`
 
-- `reason` - Why the sessions are being ended (see [`endPeerSessions()`](#managerendpeersessionspeer-reason-silent) for the list of available reasons).
+- `reason` - Why the sessions are being ended (see [`session.end()`](#sessionend) for the list of available reasons).
 - `silent` - If `true`, then session terminating messages will not be generated to be sent to the peers. This is only intended for cases where you've lost network connection and would not be able to send those messages anyway.
 
 ```js
@@ -141,33 +141,12 @@ manager.endAllSessions('gone');
 #### `manager.endPeerSessions(peer, [reason], [silent])`
 
 - `peer` - Either the `{JID}` or `{String}` value of the peer's ID.
+- `reason` - Why the session is being ended (see [`session.end()`](#sessionend) for the list of available reasons).
 - `reason` - Why the session is being ended. This may be either a `{String}` or an object:
     - `condition` - The name of the reason
     - `text` - A freeform description of the reason
     - `alternativeSession` - If the condition is `alternative-session`, this is the `sid` value for that session.
 - `silent` - If `true`, the session terminate message will not be generated to be sent to the peer.
-
-The list of valid `reason` (or `reason.condition`) values:
-
-- `alternative-session`
-- `busy`
-- `cancel`
-- `connectivity-error`
-- `decline`
-- `expired`
-- `failed-application`
-- `failed-transport`
-- `general-error`
-- `gone`
-- `incompatible-parameters`
-- `media-error`
-- `security-error`
-- `success`
-- `timeout`
-- `unsupported-applications`
-- `unsupported-transports`
-
-See [XEP-0166: Jingle Section 7.4](http://xmpp.org/extensions/xep-0166.html#def-reason) for more information on when each reason condition should be used.
 
 ```js
 // End sessions with a peer because we've successfully finished them.
@@ -228,5 +207,50 @@ manager.process({
 #### `session.start()`
 #### `session.accept()`
 #### `session.cancel()`
+
+This is a shortcut for calling `session.end('cancel')`.
+
 #### `session.decline()`
+
+This is a shortcut for calling `session.end('decline')`.
+
 #### `session.end([reason], [silent])`
+
+- `reason` - Why the session is being ended. This may be either a `{String}` or an object:
+    - `condition` - The name of the reason
+    - `text` - A freeform description of the reason
+    - `alternativeSession` - If the condition is `alternative-session`, this is the `sid` value for that session.
+- `silent` - If `true`, the session terminate message will not be generated to be sent to the peer.
+
+The list of valid `reason` (or `reason.condition`) values:
+
+- `alternative-session`
+- `busy`
+- `cancel`
+- `connectivity-error`
+- `decline`
+- `expired`
+- `failed-application`
+- `failed-transport`
+- `general-error`
+- `gone`
+- `incompatible-parameters`
+- `media-error`
+- `security-error`
+- `success`
+- `timeout`
+- `unsupported-applications`
+- `unsupported-transports`
+
+See [XEP-0166: Jingle Section 7.4](http://xmpp.org/extensions/xep-0166.html#def-reason) for more information on when each reason condition should be used.
+
+```js
+// We succesfully used the session, and are now ending it:
+session.end('success');
+
+// Declining a session in favor of an existing one:
+session.end({
+    condition: 'alternative-session',
+    alternativeSession: 'othersessionsid'
+});
+```
