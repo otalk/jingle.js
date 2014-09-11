@@ -1,8 +1,6 @@
 # Jingle
 
-... TODO: see docs/Reference.md for API docs
-
-... TODO: recreating examples
+- [API Reference](docs/Reference.md)
 
 ## Installing
 

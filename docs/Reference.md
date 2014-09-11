@@ -2,7 +2,7 @@
 
 - [`Jingle.SessionManager`](#jingleesessionmanager)
   - [`new SessionManager(config)`](#new-sessionmanagerconfig)
-  - [`SessionManager` Configuration](#sessionmanager-configuration)
+    - [`prepareSession(opts, [req])`](#sessionmanager-configuration)
   - [`SessionManager` Methods](#sessionmanager-methods)
     - [`manager.addICEServer(info)`](#manageraddiceserverinfo)
     - [`manager.addSession(session)`](#manageraddsessionsession)
@@ -33,7 +33,57 @@
 
 ## `Jingle.SessionManager`
 ### `new SessionManager(config)`
-### `SessionManager` Configuration
+
+Creates a new Jingle session manager with the following configuration options:
+
+- `jid` - The JID for the entity running the session manager. May be either a `{String}` or [`{JID}`](https://github.com/otalk/xmpp-jid).
+- `selfID` - An alternative to `jid`, which MUST be a `{String}`.
+- `iceServers` - An array of known ICE servers. See [`addICEServer()`] for the required format of each item.
+- `prepareSession` - [See below for how `prepareSession` works](#preparesessionopts-req)
+
+```js
+var Jingle = require('jingle');
+var manager = new Jingle.SessionManager({
+    jid: 'me@mydomain.example',
+    iceServers: [
+        {url: 'stun:stun.mydomain.example'}
+    ],
+    prepareSession: function (opts) {
+        return new Jingle.BaseSession(opts);
+    }
+});
+```
+
+#### `prepareSession(opts, [req])`
+
+- `opts` - An object summarizing the information in the session initiate request, suitable for passing directly to a session class constructor:
+    - `sid` - The ID for the session, as provided by the initiating peer.
+    - `peer` - The JID for the initiating peer (may be either a `{String}` or [`{JID}`](https://github.com/otalk/xmpp-jid).
+    - `peerID` - An alternative to `peer`, which MUST be a `{String}`.
+    - `initiator` - This will always be `false`, as we are the one receiving the initiation request.
+    - `descriptionTypes` - An array of content description names.
+    - `transportTypes` - An array of content transport names.
+- `req` - The original session initiation request, in case you need more information than provided in `opts` for selecting a session type.
+
+Returns a `Session` instance of your choosing or a `falsy` value if you wish to fallback to a `BaseSession` instance.
+
+The `prepareSession()` function allows you to control what type of session is created for a given
+incoming session request. If `prepareSession()` is not included when creating the session manager, or
+if your `prepareSession()` function does not return a session, a `BaseSession` will be created for you.
+
+```js
+new Jingle.SessionManager({
+    ...,
+    prepareSession: function (opts) {
+        // Check if the session request includes "stub" content, and if so
+        // create a custom StubSession.
+        if (opts.descriptionTypes.indexOf('stub') >= 0) {
+            return new StubSession(opts);
+        }
+    }
+});
+```
+
 ### `SessionManager` Methods
 #### `manager.addICEServer(info)`
 #### `manager.addSession(session)`
