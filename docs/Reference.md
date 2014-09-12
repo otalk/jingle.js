@@ -213,25 +213,48 @@ The `BaseSession` class is intended to be a common base for covering the general
 
 ### `BaseSession` Properties
 
-- `sid`
-- `peer`
-- `peerID`
-- `state`
-- `connectionState`
-- `pendingAction`
-- `pendingDescriptionTypes`
-- `isInitiator`
-- `isStarting`
-- `isPending`
-- `isActive`
-- `isEnded`
-- `isConnecting`
-- `isConnected`
-- `isDisconnected`
-- `isInterrupted`
+- `sid` - A unique ID for the session.
+- `peer` - The JID for the initiating peer (may be either a `{String}` or [`{JID}`](https://github.com/otalk/xmpp-jid)).
+- `peerID` - An alternative to `peer`, which MUST be a `{String}` (derived from `peer`).
+- `state` - Always one of:
+    - `starting`
+    - `pending`
+    - `active`
+    - `ended`
+- `connectionState` - Always one of:
+    - `starting`
+    - `connecting`
+    - `connected`
+    - `disconnected`
+    - `interrupted`
+- `pendingAction` - The name of the action that has just been sent to the peer, so we can check for tie-breaking if the same action is requested from both parties at the same time.
+- `pendingDescriptionTypes` - The list of content types gathered from a session initiate request, so that we can perform tie-breaking if another session initiation request is received for the same content types.
+- `isInitiator` - This flag is `true` if the `initiator` field is `true` when creating the session.
+- `isStarting` - This flag is `true` when `.state` equals `'starting'`.
+- `isPending` - This flag is `true` when `.state` equals `'pending'`.
+- `isActive` - This flag is `true` when `.state` equals `'active'`.
+- `isEnded` - This flag is `true` when `.state` equals `'ended'`.
+- `isConnecting` - This flag is `true` when `.connectionState` equals `'connecting'`.
+- `isConnected` - This flag is `true` when `.connectionState` equals `'connected'`.
+- `isDisconnected` - This flag is `true` when `.connectionState` equals `'disconnected'`.
+- `isInterrupted` - This flag is `true` when `.connectionState` equals `'interrupted'`.
 
 ### `BaseSession` Methods
+
 #### `session.process(action, data, cb)`
+- `action` - The session action to apply to the session.
+- `data` - The contents of the `jingle` field of a Jingle packet.
+- `cb([err])` - callback for returning potential errors, and triggering processing for the next queued action.
+    - `err` - An error object if the action could not be performed
+        - `condition` - The general error condition
+        - `jingleCondition` - A Jingle specific error condition, if applicable
+
+Calling this method places the action and its associated data and callback into the session's processing queue.
+
+Each action is processed sequentially, calling `cb()` to trigger sending an ack result to the peer, and then process the next action. If `cb()` is given an error object, an error response will be sent to the peer.
+
+This method is not intended to be called directly by the user, but is a required method for any `Session` instance to be able to work with the session manager.
+
 #### `session.send(action, data)`
 
 - `action` - The session action the peer should perform based on this request.
@@ -239,7 +262,7 @@ The `BaseSession` class is intended to be a common base for covering the general
 
 Emits a `send` event for a new Jingle packet:
 
-```
+```js
 // Send a session terminate message directly:
 session.send('session-terminate', {
     reason: {
