@@ -440,6 +440,7 @@ The full list of standard session actions:
 - `content-reject`
 - `content-remove`
 - `description-info`
+- `security-info`
 - `session-accept`
 - `session-info`
 - `session-initiate`
