@@ -29,6 +29,7 @@
     - [`session.cancel()`](#sessioncancel)
     - [`session.decline()`](#sessiondecline)
     - [`session.end([reason], [silent])`](#sessionendreason-silent)
+    - [`session.on<SessionAction>(data, cb)`](#sessiononsessionactiondata-cb)
 
 
 ## `Jingle.SessionManager`
@@ -325,20 +326,20 @@ session.send('session-terminate', {
 });
 
 // emitted send event: {
-    to: 'otherpeer@theirdomain.example',
-    type: 'set',
-    jingle: {
-        sid: 'sid123',
-
-        // the provided action:
-        action: 'session-terminate',
-
-        // the provided data:
-        reason: {
-            condition: 'gone'
-        }
-    }
-}
+//    to: 'otherpeer@theirdomain.example',
+//    type: 'set',
+//    jingle: {
+//        sid: 'sid123',
+//
+//        // the provided action:
+//        action: 'session-terminate',
+//
+//        // the provided data:
+//        reason: {
+//            condition: 'gone'
+//        }
+//    }
+//}
 ```
 
 #### `session.start()`
@@ -429,3 +430,29 @@ session.end({
     alternativeSession: 'othersessionsid'
 });
 ```
+
+#### `session.on<SessionAction>(data, cb)`
+
+- `data` - The `jingle` payload of a Jingle packet
+- `cb` - Callback for sending an ack or error to the peer, and allow processing of the next action.
+
+Each session action has a corresponding `onX(data, cb)` method, where `X` is the action name in CamelCase without dashes.
+
+The full list of standard session actions:
+
+- `content-accept`
+- `content-add`
+- `content-modify`
+- `content-reject`
+- `content-remove`
+- `description-info`
+- `session-accept`
+- `session-info`
+- `session-initiate`
+- `session-terminate`
+- `transport-accept`
+- `transport-info`
+- `transport-reject`
+- `transport-replace`
+
+See [XEP-0166: Jingle Section 7.2](http://xmpp.org/extensions/xep-0166.html#def-action) for more information on when each action is used.
