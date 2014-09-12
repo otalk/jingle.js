@@ -156,14 +156,14 @@ manager.endPeerSessions('otheruser@theirdomain.example', 'success');
 #### `manager.process(packet)`
 
 - `packet` - An object representing an action to process & apply to a session.
-    - `from`
-    - `to`
-    - `id`
-    - `type`
-    - `jingle`
-        - `sid`
-        - `action`
-        - `contents`
+    - `from` - The ID for the peer which sent the packet
+    - `to` - Optional, this should be the ID for the session manager
+    - `id` - ID of the packet
+    - `type` - One of: `set`, `result`, or `error`
+    - `jingle` - This is the data that will be forwarded to the matching session
+        - `sid` - The session ID
+        - `action` - The action for the session to perform, using the data in `jingle`
+        - `contents` -
     - `error`
         - `condition`
         - `jingleCondition`
@@ -189,13 +189,67 @@ manager.process({
 ```
 
 ### `SessionManager` Events
-#### `createdSession`
-#### `error`
 #### `incoming`
+
+The `incoming` event is triggered when a session initiation request is received from a peer.
+
+```js
+manager.on('incoming', function (session) {
+    // Auto-accept sessions 
+    session.accept(); 
+});
+```
+
 #### `outgoing`
+
+The `outgoing` event is triggered when a tracked session has its [`.start()`](#sessionstart) method called.
+
+```js
+manager.on('outgoing', function (session) {
+    renderOutgoingSessionUI(session);
+});
+```
+
 #### `send`
+
+The `send` event provides a Jingle packet suitable for sending to the peer. Each packet includes some routing information, an optional Jingle payload, and an optional error payload.
+
+```js
+manager.on('send', function (data) {
+    realtimeConnection.send(data, function (err, result) {
+        // We want to process both successful acks, and errors
+        var resp = err || result;
+
+        // Ensure that we have the sid included in the ack so
+        // that it routes properly to the correct session.
+        resp.jingle = resp.jingle || {};
+        resp.jingle.sid = data.jingle.sid;
+
+        // Process the ack response
+        manager.process(resp);
+    });
+});
+```
+
 #### `terminated`
+
+The `terminated` event is triggered when a session has been ended, either locally via the session's [`.end()`](#sessionendreason-silent) method, or from a session terminate action from the peer.
+
+```js
+manager.on('terminated', function (session) {
+    closeSessionUI();
+});
+```
+
 #### `log:[error|debug|info]`
+
+Log messages can be listened for with the `log:error`, `log:debug`, and `log:info` events.
+
+```js
+manager.on('log:*', function (logLevel, msg) {
+    console.log(logLevel, msg);
+});
+```
 
 ## `Jingle.BaseSession`
 
