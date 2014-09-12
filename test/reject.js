@@ -117,3 +117,120 @@ test('Reject transport-replace by default', function (t) {
         }
     });
 });
+
+test('Return error for unknown session-info action', function (t) {
+    t.plan(1);
+
+    var jingle = new SessionManager({
+        jid: 'zuser@example.com'
+    });
+
+    var sess = new BaseSession({
+        sid: 'sid123',
+        peer: 'peer@example.com'
+    });
+    jingle.addSession(sess);
+    sess.state = 'active';
+
+    jingle.on('send', function (data) {
+        t.same(data, {
+            to: 'peer@example.com',
+            id: '123',
+            type: 'error',
+            error: {
+                type: 'modify',
+                condition: 'feature-not-implemented',
+                jingleCondition: 'unsupported-info'
+            }
+        });
+    });
+
+    jingle.process({
+        to: 'zuser@example.com',
+        from: 'peer@example.com',
+        id: '123',
+        type: 'set',
+        jingle: {
+            sid: 'sid123',
+            action: 'session-info'
+        }
+    });
+});
+
+test('Return error for unknown description-info action', function (t) {
+    t.plan(1);
+
+    var jingle = new SessionManager({
+        jid: 'zuser@example.com'
+    });
+
+    var sess = new BaseSession({
+        sid: 'sid123',
+        peer: 'peer@example.com'
+    });
+    jingle.addSession(sess);
+    sess.state = 'active';
+
+    jingle.on('send', function (data) {
+        t.same(data, {
+            to: 'peer@example.com',
+            id: '123',
+            type: 'error',
+            error: {
+                type: 'modify',
+                condition: 'feature-not-implemented',
+                jingleCondition: 'unsupported-info'
+            }
+        });
+    });
+
+    jingle.process({
+        to: 'zuser@example.com',
+        from: 'peer@example.com',
+        id: '123',
+        type: 'set',
+        jingle: {
+            sid: 'sid123',
+            action: 'description-info'
+        }
+    });
+});
+
+test('Return error for unknown transport-info action', function (t) {
+    t.plan(1);
+
+    var jingle = new SessionManager({
+        jid: 'zuser@example.com'
+    });
+
+    var sess = new BaseSession({
+        sid: 'sid123',
+        peer: 'peer@example.com'
+    });
+    jingle.addSession(sess);
+    sess.state = 'active';
+
+    jingle.on('send', function (data) {
+        t.same(data, {
+            to: 'peer@example.com',
+            id: '123',
+            type: 'error',
+            error: {
+                type: 'modify',
+                condition: 'feature-not-implemented',
+                jingleCondition: 'unsupported-info'
+            }
+        });
+    });
+
+    jingle.process({
+        to: 'zuser@example.com',
+        from: 'peer@example.com',
+        id: '123',
+        type: 'set',
+        jingle: {
+            sid: 'sid123',
+            action: 'transport-info'
+        }
+    });
+});
