@@ -119,7 +119,7 @@ test('Reject transport-replace by default', function (t) {
 });
 
 test('Return error for unknown session-info action', function (t) {
-    t.plan(1);
+    t.plan(2);
 
     var jingle = new SessionManager({
         jid: 'zuser@example.com'
@@ -132,19 +132,43 @@ test('Return error for unknown session-info action', function (t) {
     jingle.addSession(sess);
     sess.state = 'active';
 
+    var sentError = false;
     jingle.on('send', function (data) {
-        t.same(data, {
-            to: 'peer@example.com',
-            id: '123',
-            type: 'error',
-            error: {
-                type: 'modify',
-                condition: 'feature-not-implemented',
-                jingleCondition: 'unsupported-info'
-            }
-        });
+        if (!sentError) {
+            t.same(data, {
+                to: 'peer@example.com',
+                id: '123',
+                type: 'error',
+                error: {
+                    type: 'modify',
+                    condition: 'feature-not-implemented',
+                    jingleCondition: 'unsupported-info'
+                }
+            });
+            sentError = true;
+        } else {
+            t.same(data, {
+                to: 'peer@example.com',
+                id: '123',
+                type: 'result'
+            });
+        }
     });
 
+    // Should generate an error because of unknownInfoData
+    jingle.process({
+        to: 'zuser@example.com',
+        from: 'peer@example.com',
+        id: '123',
+        type: 'set',
+        jingle: {
+            sid: 'sid123',
+            action: 'session-info',
+            unknownInfoData: true
+        }
+    });
+
+    // Should generate a normal ack
     jingle.process({
         to: 'zuser@example.com',
         from: 'peer@example.com',
