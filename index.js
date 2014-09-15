@@ -1,1 +1,2 @@
-module.exports = require('./lib/sessionManager');
+exports.SessionManager = require('./lib/sessionManager');
+exports.BaseSession = require('./lib/baseSession');

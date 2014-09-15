@@ -1,10 +1,14 @@
-# Reporting Security Issues
+# How to contact us
+Please send any bug that you feel impacts the security of this project to **security@andyet.net**
 
-[Report Vulnerability to the Node Security Project](mailto:report@nodesecurity.io?cc=lancestout@gmail.com&subject=Security%20Issue%20for%20Jingle.js)
+# Expectations
+You will receive acknowledgement of your report within **24 hours** and a more detailed followup within *48 hours* once we have had time to look into the issue further.
 
-In the interest of responsible disclosure, please use the above to report any security issues so
-that the appropriate patches and advisories can be made.
+If we have not responded promptly we ask that you give us the benefit of the doubt as it is possible the email went to spam or we have been so focused on something else we haven't seen it yet.  Please send us a quick message, *without detail* at one of the following.
 
-## History
+- Email [Adam Baldwin](mailto:baldwin@andyet.net), the &yet CSO directly.
+- Message [@andyet](https://twitter.com/andyet) on twitter.
+- Give our ops team a heads up on IRC in #&yet on irc.freenode.net
 
+# History
 No security issues have been reported for this project yet.
