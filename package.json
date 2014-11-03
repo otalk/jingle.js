@@ -14,7 +14,7 @@
     "filetransfer": "^1.0.0",
     "hark": "^1.1.1",
     "mockconsole": "0.0.1",
-    "rtcpeerconnection": "^2.6.0",
+    "rtcpeerconnection": "^2.6.3",
     "sdp-jingle-json": "^1.3.0",
     "underscore": "^1.6.0",
     "webrtcsupport": "^0.7.3",
