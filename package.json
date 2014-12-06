@@ -10,13 +10,10 @@
   ],
   "dependencies": {
     "async": "^0.9.0",
-    "bows": "^0.3.0",
+    "extend-object": "^1.0.0",
     "filetransfer": "^1.0.0",
-    "hark": "^1.1.1",
     "mockconsole": "0.0.1",
-    "rtcpeerconnection": "^2.6.3",
-    "sdp-jingle-json": "^1.3.0",
-    "underscore": "^1.6.0",
+    "rtcpeerconnection": "^2.6.6",
     "webrtcsupport": "^1.1.0",
     "wildemitter": "^1.0.1"
   },
@@ -29,7 +26,6 @@
     "grunt-nsp-package": "0.0.x",
     "grunt-tape": "0.0.x",
     "precommit-hook": "^1.0.0",
-    "tape": "2.x",
     "uglify-js": "2.x"
   },
   "homepage": "https://github.com/otalk/jingle.js",
