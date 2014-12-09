@@ -45,7 +45,7 @@ $ npm install jingle
 ## Building bundled/minified version (for AMD, etc)
 
 ```sh
-$ grunt
+$ make build
 ```
 
 The bundled and minified files will be in the generated `build` directory.

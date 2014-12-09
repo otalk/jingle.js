@@ -5,29 +5,27 @@
   "author": "Lance Stout <lance@andyet.net>",
   "bugs": "https://github.com/otalk/jingle.js/issues",
   "contributors": [
-    "Lloyd Watkin",
-    "Philipp Hancke"
+    "Philipp Hancke <fippo@andyet.net>",
+    "Lloyd Watkin"
   ],
   "dependencies": {
     "async": "^0.9.0",
     "extend-object": "^1.0.0",
     "filetransfer": "^1.0.0",
     "intersect": "^0.1.0",
-    "mockconsole": "0.0.1",
     "rtcpeerconnection": "^2.6.6",
     "webrtcsupport": "^1.1.0",
     "wildemitter": "^1.0.1"
   },
   "devDependencies": {
-    "browserify": "4.x",
-    "grunt": "0.4.x",
-    "grunt-browserify": "2.x",
-    "grunt-contrib-jshint": "0.10.x",
-    "grunt-contrib-uglify": "0.4.x",
-    "grunt-nsp-package": "0.0.x",
-    "grunt-tape": "0.0.x",
-    "precommit-hook": "^1.0.0",
-    "uglify-js": "2.x"
+    "browserify": "^5.11.1",
+    "covert": "^1.0.0",
+    "jshint": "^2.5.5",
+    "nsp": "^0.2.6",
+    "precommit-hook": "^1.0.7",
+    "tap-spec": "^0.2.1",
+    "tape": "^2.14.0",
+    "uglify-js": "^2.4.15"
   },
   "homepage": "https://github.com/otalk/jingle.js",
   "keywords": [
@@ -41,5 +39,9 @@
     "type": "git",
     "url": "https://github.com/otalk/jingle.js.git"
   },
-  "scripts": {}
+  "scripts": {
+    "audit": "make audit",
+    "build": "make build",
+    "test": "make test"
+  }
 }
