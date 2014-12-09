@@ -41,7 +41,6 @@
   },
   "scripts": {
     "audit": "make audit",
-    "build": "make build",
-    "test": "make test"
+    "build": "make build"
   }
 }
