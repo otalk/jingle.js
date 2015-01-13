@@ -1,6 +1,6 @@
 var test = require('tape');
-var SessionManager = require('../lib/sessionManager');
-var GenericSession = require('../lib/genericSession');
+var SessionManager = require('../');
+var GenericSession = require('jingle-session');
 
 
 test('Test session-initiate with no contents fails', function (t) {

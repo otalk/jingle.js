@@ -1,7 +1,7 @@
 var test = require('tape');
 var util = require('util');
-var SessionManager = require('../lib/sessionManager');
-var GenericSession = require('../lib/genericSession');
+var SessionManager = require('../');
+var GenericSession = require('jingle-session');
 
 
 // We need a Stub Session that acts more like how we'd

@@ -1,6 +1,6 @@
 var test = require('tape');
-var SessionManager = require('../lib/sessionManager');
-var GenericSession = require('../lib/genericSession');
+var SessionManager = require('../');
+var GenericSession = require('jingle-session');
 
 
 test('Test tie-break from duplicate sids', function (t) {
