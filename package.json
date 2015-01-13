@@ -13,6 +13,9 @@
     "extend-object": "^1.0.0",
     "filetransfer": "^1.0.0",
     "intersect": "^0.1.0",
+    "jingle-filetransfer-session": "^1.1.0",
+    "jingle-media-session": "^1.1.1",
+    "jingle-session": "^1.0.0",
     "rtcpeerconnection": "^2.6.6",
     "webrtcsupport": "^1.1.0",
     "wildemitter": "^1.0.1"
