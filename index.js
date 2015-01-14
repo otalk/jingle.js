@@ -61,7 +61,7 @@ function SessionManager(conf) {
         peerConnectionConstraints: {
             optional: [
                 {DtlsSrtpKeyAgreement: true},
-                {RtpDataChannesl: false}
+                {RtpDataChannels: false}
             ]
         },
         media: {
@@ -151,7 +151,7 @@ SessionManager.prototype.createMediaSession = function (peer, sid, stream) {
         initiator: true,
         stream: stream,
         parent: this,
-        iceServers: this.config.peerConnectionConfig.iceServers,
+        iceServers: this.iceServers,
         constraints: this.config.peerConnectionConstraints
     });
 
@@ -376,7 +376,9 @@ SessionManager.prototype.process = function (req) {
             initiator: false,
             parent: this,
             descriptionTypes: descriptionTypes,
-            transportTypes: transportTypes
+            transportTypes: transportTypes,
+            iceServers: this.iceServers,
+            constraints: this.peerConnectionConstraints
         }, req);
     }
 
