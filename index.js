@@ -150,7 +150,9 @@ SessionManager.prototype.createMediaSession = function (peer, sid, stream) {
         peer: peer,
         initiator: true,
         stream: stream,
-        parent: this
+        parent: this,
+        iceServers: this.config.peerConnectionConfig.iceServers,
+        constraints: this.config.peerConnectionConstraints
     });
 
     this.addSession(session);
