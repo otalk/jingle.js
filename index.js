@@ -1,11 +1,16 @@
 var util = require('util');
-var intersect = require('intersect');
 var WildEmitter = require('wildemitter');
 var webrtc = require('webrtcsupport');
 
 var BaseSession = require('jingle-session');
 var MediaSession = require('jingle-media-session');
 var FileSession = require('jingle-filetransfer-session');
+
+
+var defaultDeny = function () {
+    console.log(arguments);
+    return false;
+};
 
 
 function SessionManager(conf) {
@@ -27,6 +32,12 @@ function SessionManager(conf) {
             return new FileSession(opts);
         }
     };
+
+    this.trustInitiator = conf.trustInitiator || defaultDeny;
+    this.trustResponder = conf.trustResponder || defaultDeny;
+    this.checkSessionTie = conf.checkSessionTie || defaultDeny;
+
+    console.log(conf);
 
     this.screenSharingSupport = webrtc.screenSharing;
 
@@ -93,6 +104,21 @@ SessionManager.prototype.addICEServer = function (server) {
     this.iceServers.push(server);
 };
 
+SessionManager.prototype._addSessionForPeer = function (peerID, session) {
+    if (!this.peers[peerID]) {
+        this.peers[peerID] = [];
+    }
+
+    this.peers[peerID].push(session);
+};
+
+SessionManager.prototype._removeSessionForPeer = function (peerID, session) {
+    var peers = this.peers[peerID] || [];
+    if (peers.length) {
+        peers.splice(peers.indexOf(session), 1);
+    }
+};
+
 SessionManager.prototype.addSession = function (session) {
     var self = this;
 
@@ -100,18 +126,11 @@ SessionManager.prototype.addSession = function (session) {
     var peer = session.peerID;
 
     this.sessions[sid] = session;
-    if (!this.peers[peer]) {
-        this.peers[peer] = [];
-    }
-
-    this.peers[peer].push(session);
+    this._addSessionForPeer(peer, session);
 
     // Automatically clean up tracked sessions
     session.on('terminated', function () {
-        var peers = self.peers[peer] || [];
-        if (peers.length) {
-            peers.splice(peers.indexOf(session), 1);
-        }
+        self._removeSessionForPeer(peer, session);
         delete self.sessions[sid];
     });
 
@@ -233,7 +252,11 @@ SessionManager.prototype.process = function (req) {
     var sid = !!req.jingle ? req.jingle.sid : null;
     var session = this.sessions[sid] || null;
     var rid = req.id;
-    var sender = req.from.full || req.from;
+    var sender = req.from;
+    var senderID = sender.full || sender;
+
+    var responder = !!req.jingle ? req.jingle.responder : null;
+    var initiator = !!req.jingle ? req.jingle.initiator : null;
 
 
     if (req.type === 'error') {
@@ -313,7 +336,7 @@ SessionManager.prototype.process = function (req) {
         }
     } else if (session) {
         // Don't accept a new session if we already have one.
-        if (session.peerID !== sender) {
+        if (session.peerID !== senderID) {
             this._log('error', 'Duplicate sid from new sender');
             return this._sendError(sender, rid, {
                 condition: 'service-unavailable'
@@ -338,24 +361,19 @@ SessionManager.prototype.process = function (req) {
                 jingleCondition: 'out-of-order'
             });
         }
-    } else if (this.peers[sender] && this.peers[sender].length) {
+    } else if (this.peers[senderID] && this.peers[senderID].length) {
         // Check if we need to have a tie breaker because we already have
         // a different session with this peer that is using the requested
         // content description types.
-        for (var i = 0, len = this.peers[sender].length; i < len; i++) {
-            var sess = this.peers[sender][i];
-            if (sess && sess.pending) {
-                if (intersect(descriptionTypes, sess.pendingDescriptionTypes).length) {
-                    // We already have a pending session request for this content type.
-                    if (sess.sid > sid) {
-                        // We won the tie breaker
-                        this._log('info', 'Tie break');
-                        return this._sendError(sender, rid, {
-                            condition: 'conflict',
-                            jingleCondition: 'tie-break'
-                        });
-                    }
-                }
+        for (var i = 0, len = this.peers[senderID].length; i < len; i++) {
+            var sess = this.peers[senderID][i];
+            if (sess && sess.pending && sess.sid > sid && this.checkSessionTie(sess, descriptionTypes, sender)) {
+                // We won the tie breaker
+                this._log('info', 'Tie break');
+                return this._sendError(sender, rid, {
+                    condition: 'conflict',
+                    jingleCondition: 'tie-break'
+                });
             }
         }
     }
@@ -369,10 +387,13 @@ SessionManager.prototype.process = function (req) {
             });
         }
 
+        if (!initiator || !this.trustInitiator(sender, initiator)) {
+            initiator = req.from;
+        }
+
         session = this._createIncomingSession({
             sid: sid,
-            peer: req.from,
-            peerID: sender,
+            peer: initiator,
             initiator: false,
             parent: this,
             descriptionTypes: descriptionTypes,
@@ -380,6 +401,14 @@ SessionManager.prototype.process = function (req) {
             iceServers: this.iceServers,
             constraints: this.peerConnectionConstraints
         }, req);
+    }
+
+    if (action === 'session-accept' && this.trustResponder(sender, responder)) {
+        this._removeSessionForPeer(session.peerID, session);
+
+        session.changePeer(responder);
+
+        this._addSessionForPeer(session.peerID, session);
     }
 
     session.process(action, req.jingle, function (err) {

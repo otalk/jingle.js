@@ -1,4 +1,5 @@
 var test = require('tape');
+var intersect = require('intersect');
 var SessionManager = require('../');
 var GenericSession = require('jingle-session');
 
@@ -7,7 +8,10 @@ test('Test tie-break from duplicate sids', function (t) {
     t.plan(1);
 
     var jingle = new SessionManager({
-        jid: 'zuser@example.com'
+        jid: 'zuser@example.com',
+        checkSessionTie: function (oldSession, newDescriptionTypes) {
+            return intersect(oldSession.pendingDescriptionTypes, newDescriptionTypes).length > 0;
+        }
     });
 
     var sess = new GenericSession({
@@ -55,7 +59,10 @@ test('Test tie-break from existing session', function (t) {
     t.plan(1);
 
     var jingle = new SessionManager({
-        jid: 'zuser@example.com'
+        jid: 'zuser@example.com',
+        checkSessionTie: function (oldSession, newDescriptionTypes) {
+            return intersect(oldSession.pendingDescriptionTypes, newDescriptionTypes).length > 0;
+        }
     });
 
     var sess = new GenericSession({
