@@ -378,7 +378,7 @@ SessionManager.prototype.process = function (req) {
             descriptionTypes: descriptionTypes,
             transportTypes: transportTypes,
             iceServers: this.iceServers,
-            constraints: this.peerConnectionConstraints
+            constraints: this.config.peerConnectionConstraints
         }, req);
     }
 
