@@ -3,6 +3,7 @@
 - [`Jingle`](#jinglejingle)
   - [`new Jingle(config)`](#new-jingleconfig)
     - [`prepareSession(opts, [req])`](#preparesessionopts-req)
+    - [`performTieBreak(existingSession, req)`](#performtiebreakexistingsession-req)
   - [`Jingle` Methods](#jingle-methods)
     - [`jingle.addICEServer(info)`](#jingleaddiceserverinfo)
     - [`jingle.addSession(session)`](#jingleaddsessionsession)
@@ -31,6 +32,7 @@ Creates a new Jingle session jingle with the following configuration options:
 - `selfID` - An optional alternative to `jid`, which MUST be a `{String}`. By default, this is derived from `jid`, if `jid` was provided.
 - `iceServers` - An array of known ICE servers. See [`addICEServer()`](#jingleaddiceserverinfo) for the required format of each item.
 - `prepareSession` - [See below for how `prepareSession` works](#preparesessionopts-req)
+- `performTieBreak` - [See below for how `performTieBreak` works](#performtiebreakexistingsession-req)
 
 ```js
 var Jingle = require('jingle');
@@ -76,6 +78,20 @@ new Jingle.Jingle({
     }
 });
 ```
+
+#### `performTieBreak(existingSession, req)`
+
+- `existingSession` - A Session object.
+- `req` - The incoming session initiation request that triggered the tie break check.
+
+A tie break check is performed when receiving a `session-initiate` if:
+
+- A session in the `pending` state already exists for the peer.
+- The existing pending session ID is greater than the one used by the incoming session request
+
+The `performTieBreak()` method allows you to control whether or not the session request is declined to resolve the tie. In some applications, you may wish to allow two simultaneous sessions (e.g., multiple uni-directional video sessions). In others you may wish to allow the tie break to force the use of a single session (e.g., a bidirectional video session).
+
+Returning `true` will trigger the tie break and deny the request; returning `false` will allow the session request to proceed.
 
 ### `Jingle` Methods
 #### `jingle.addICEServer(info)`

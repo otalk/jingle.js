@@ -28,6 +28,18 @@ function SessionManager(conf) {
         }
     };
 
+    this.performTieBreak = conf.performTieBreak || function (sess, req) {
+        var descriptionTypes = req.jingle.contents.map(function (content) {
+            if (content.description) {
+                return content.description.descType;
+            }
+        });
+
+        var matching = intersect(sess.pendingDescriptionTypes, descriptionTypes);
+
+        return matching.length > 0;
+    };
+
     this.screenSharingSupport = webrtc.screenSharing;
 
     this.capabilities = [
@@ -323,7 +335,7 @@ SessionManager.prototype.process = function (req) {
         // Check if we need to have a tie breaker because both parties
         // happened to pick the same random sid.
         if (session.pending) {
-            if (this.selfID > session.peerID) {
+            if (this.selfID > session.peerID && this.performTieBreak(session, req)) {
                 this._log('error', 'Tie break new session because of duplicate sids');
                 return this._sendError(sender, rid, {
                     condition: 'conflict',
@@ -344,18 +356,12 @@ SessionManager.prototype.process = function (req) {
         // content description types.
         for (var i = 0, len = this.peers[sender].length; i < len; i++) {
             var sess = this.peers[sender][i];
-            if (sess && sess.pending) {
-                if (intersect(descriptionTypes, sess.pendingDescriptionTypes).length) {
-                    // We already have a pending session request for this content type.
-                    if (sess.sid > sid) {
-                        // We won the tie breaker
-                        this._log('info', 'Tie break');
-                        return this._sendError(sender, rid, {
-                            condition: 'conflict',
-                            jingleCondition: 'tie-break'
-                        });
-                    }
-                }
+            if (sess && sess.pending && sess.sid > sid && this.performTieBreak(sess, req)) {
+                this._log('info', 'Tie break session-initiate');
+                return this._sendError(sender, rid, {
+                    condition: 'conflict',
+                    jingleCondition: 'tie-break'
+                });
             }
         }
     }

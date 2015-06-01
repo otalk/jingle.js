@@ -19,6 +19,7 @@ test('Test tie-break from duplicate sids', function (t) {
     jingle.addSession(sess);
 
     sess.state = 'pending';
+    sess.pendingDescriptionTypes = ['test'];
 
     jingle.on('send', function (data) {
         t.same(data, {
