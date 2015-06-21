@@ -1,6 +1,7 @@
 # Jingle WebRTC
 
 ## Example
+    var Jingle = require('jingle');
 
     var conn = new RealtimeConnection(); // stanza.io, xmpp-ftw, strophe, etc
     var jingle = new Jingle();
