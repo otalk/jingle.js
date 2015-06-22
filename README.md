@@ -1,41 +1,52 @@
 # Jingle WebRTC
 
 ## Example
-    var Jingle = require('jingle');
 
-    var conn = new RealtimeConnection(); // stanza.io, xmpp-ftw, strophe, etc
-    var jingle = new Jingle();
-    var attachMediaStream = require('attachmediastream');
-    var localMedia = require('localMedia');
+```js
+var Jingle = require('jingle');
 
-    localMedia.on('localStream', function (stream) {
-        attachMediaStream(stream, document.getElementById('localVideo'), {
-            mirror: true,
-            muted: true
-        });
+var conn = new RealtimeConnection(); // stanza.io, xmpp-ftw, strophe, etc
+var jingle = new Jingle();
+var attachMediaStream = require('attachmediastream');
+var localMedia = require('localMedia');
+
+localMedia.on('localStream', function (stream) {
+    attachMediaStream(stream, document.getElementById('localVideo'), {
+        mirror: true,
+        muted: true
     });
+});
 
-    jingle.on('send', function (data) {
-         conn.send(data);
-    });
+// Capture incoming Jingle data and feed it to the Jingle
+// session manager for processing
+conn.on('data', function (data) {
+    jingle.process(data);
+});
 
-    jingle.on('peerStreamAdded', function (session, stream) {
-         attachMediaStream(stream, document.getElementById('remoteVideo'));
-    });
+// Capture outgoing Jingle signaling traffic and send it via
+// a realtime connection
+jingle.on('send', function (data) {
+    conn.send(data);
+});
 
-    // Answering a call request.
-    jingle.on('incoming', function (session) {
-         // attach a media stream if desired
-         // session.addStream(localMedia.localStream);
-         session.accept(); // Or display an incoming call banner, etc
-    });
+jingle.on('peerStreamAdded', function (session, stream) {
+    attachMediaStream(stream, document.getElementById('remoteVideo'));
+});
 
-    // Starting an A/V session.
-    localMedia.start(null, function (stream) {
-        var sess = jingle.createMediaSession('peer@example.com/resouce');
-        sess.addStream(stream);
-        sess.start();
-    });
+// Answering a call request.
+jingle.on('incoming', function (session) {
+    // attach a media stream if desired
+    // session.addStream(localMedia.localStream);
+    session.accept(); // Or display an incoming call banner, etc
+});
+
+// Starting an A/V session.
+localMedia.start(null, function (stream) {
+    var sess = jingle.createMediaSession('peer@example.com/resouce');
+    sess.addStream(stream);
+    sess.start();
+});
+```
 
 ## Installing
 

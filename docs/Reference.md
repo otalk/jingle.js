@@ -1,4 +1,4 @@
-# 1.6.x API Reference
+# 1.7.x API Reference
 
 - [`Jingle`](#jinglejingle)
   - [`new Jingle(config)`](#new-jingleconfig)
