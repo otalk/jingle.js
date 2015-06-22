@@ -171,7 +171,7 @@ jingle.endPeerSessions('otheruser@theirdomain.example', 'success');
         - `condition` - The type of error
         - `jingleCondition` - A Jingle specific error condition, if applicable
 
-The `.process()` method is the heart of how the `Jingle` works. It verifies that the incoming packet is valid (e.g. preventing session hijacking or handling tie-breaking conditions), and then routes the packet to the matching session for further, session-type specific processing.
+The `.process()` method is the heart of how the Jingle module works. It verifies that the incoming packet is valid (e.g. preventing session hijacking or handling tie-breaking conditions), and then routes the packet to the matching session for further, session-type specific processing.
 
 
 ```js
