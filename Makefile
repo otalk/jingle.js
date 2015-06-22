@@ -4,7 +4,6 @@ MAIN = index.js
 
 SHELL = /bin/bash
 PATH := ./node_modules/.bin:$(PATH)
-LIB = $(shell find lib -name '*.js')
 
 
 # -- Tasks ------------------------------------------------------------
@@ -33,7 +32,7 @@ audit:
 build/$(NAME).zip: build/$(NAME).bundle.js build/$(NAME).bundle.min.js
 	zip -j $@ $^
 
-build/$(NAME).bundle.js: $(MAIN) $(LIB)
+build/$(NAME).bundle.js: $(MAIN)
 	mkdir -p build
 	browserify --standalone $(STANDALONE) $(MAIN) > $@
 
