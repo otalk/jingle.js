@@ -47,6 +47,8 @@ localMedia.start(null, function (stream) {
     sess.start();
 });
 ```
+## Integrations
+[stanza.io](https://github.com/otalk/stanza.io) and [strophe.jinglejs](https://github.com/sualko/strophe.jinglejs) for integrations of this library.
 
 ## Installing
 
