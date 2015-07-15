@@ -26,6 +26,8 @@
     "precommit-hook": "^1.0.7",
     "tap-spec": "^0.2.1",
     "tape": "^2.14.0",
+    "testling": "^1.7.1",
+    "travis-multirunner": "^2.5.0",
     "uglify-js": "^2.4.15"
   },
   "homepage": "https://github.com/otalk/jingle.js",
@@ -42,6 +44,10 @@
   },
   "scripts": {
     "audit": "make audit",
-    "build": "make build"
+    "build": "make build",
+    "test-travis": "test/run-tests"
+  },
+  "testling": {
+    "files": "test/*.js"
   }
 }
