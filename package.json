@@ -9,7 +9,6 @@
     "Lloyd Watkin"
   ],
   "dependencies": {
-    "async": "^0.9.0",
     "extend-object": "^1.0.0",
     "intersect": "^0.1.0",
     "jingle-filetransfer-session": "^1.1.0",
