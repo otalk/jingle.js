@@ -9,7 +9,6 @@
     "Lloyd Watkin"
   ],
   "dependencies": {
-    "async": "^0.9.0",
     "extend-object": "^1.0.0",
     "intersect": "^0.1.0",
     "jingle-filetransfer-session": "^1.1.0",
@@ -26,7 +25,10 @@
     "precommit-hook": "^1.0.7",
     "tap-spec": "^0.2.1",
     "tape": "^2.14.0",
-    "uglify-js": "^2.4.15"
+    "testling": "^1.7.1",
+    "travis-multirunner": "^2.5.0",
+    "uglify-js": "^2.4.15",
+    "webrtc-adapter-test": "^0.1.4"
   },
   "homepage": "https://github.com/otalk/jingle.js",
   "keywords": [
@@ -42,6 +44,10 @@
   },
   "scripts": {
     "audit": "make audit",
-    "build": "make build"
+    "build": "make build",
+    "test-travis": "test/run-tests"
+  },
+  "testling": {
+    "files": "test/*.js"
   }
 }
