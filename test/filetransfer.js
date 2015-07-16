@@ -58,8 +58,9 @@ test('filetransfer', function (t) {
     });
     managers[1].on('receivedFile', function(session, file, metadata) {
         t.pass('file was received');
-        t.ok(file.name === metadata.name, 'filename received by peer');
-        t.ok(file.size === metadata.size, 'size was received by peer');
+        t.ok(sendFile.name === metadata.name, 'filename received by peer');
+        t.ok(sendFile.size === metadata.size, 'size was received by peer');
+        t.end();
     });
 
     managers[0].on('sentFile', function (session, metadata) {
@@ -78,6 +79,6 @@ test('filetransfer', function (t) {
             t.pass('P2P connection established');
         }
     });
-    var file = getFile();
-    sess.start(file);
+    var sendFile = getFile();
+    sess.start(sendFile);
 });
