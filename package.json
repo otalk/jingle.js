@@ -26,7 +26,7 @@
     "tap-spec": "^0.2.1",
     "tape": "^2.14.0",
     "testling": "^1.7.1",
-    "travis-multirunner": "^2.5.0",
+    "travis-multirunner": "^3.0.0",
     "uglify-js": "^2.4.15",
     "webrtc-adapter-test": "^0.1.4"
   },
