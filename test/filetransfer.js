@@ -50,6 +50,7 @@ function getFile(){
 }
 
 test('filetransfer', function (t) {
+    var sendFile = getFile();
     var managers = setupSessionManagers();
     managers[1].on('incoming', function (session) {
         t.pass('peer got incoming session');
@@ -79,6 +80,5 @@ test('filetransfer', function (t) {
             t.pass('P2P connection established');
         }
     });
-    var sendFile = getFile();
     sess.start(sendFile);
 });
