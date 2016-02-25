@@ -38,8 +38,8 @@ test('Test session-initiate', function (t) {
             action: 'session-initiate',
             contents: [
                 {
-                    description: {descType: 'test'},
-                    transport: {transType: 'test'}
+                    application: {applicationType: 'test'},
+                    transport: {transportType: 'test'}
                 }
             ]
         }
@@ -145,8 +145,8 @@ test('Prepare session', function (t) {
             action: 'session-initiate',
             contents: [
                 {
-                    description: {descType: 'test'},
-                    transport: {transType: 'test'}
+                    application: {applicationType: 'test'},
+                    transport: {transportType: 'test'}
                 }
             ]
         }

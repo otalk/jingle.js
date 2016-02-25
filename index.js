@@ -20,22 +20,22 @@ function SessionManager(conf) {
     this.peers = {};
 
     this.prepareSession = conf.prepareSession || function (opts) {
-        if (opts.descriptionTypes.indexOf('rtp') >= 0) {
+        if (opts.applicationTypes.indexOf('rtp') >= 0) {
             return new MediaSession(opts);
         }
-        if (opts.descriptionTypes.indexOf('filetransfer') >= 0) {
+        if (opts.applicationTypes.indexOf('filetransfer') >= 0) {
             return new FileSession(opts);
         }
     };
 
     this.performTieBreak = conf.performTieBreak || function (sess, req) {
-        var descriptionTypes = req.jingle.contents.map(function (content) {
-            if (content.description) {
-                return content.description.descType;
+        var applicationTypes= req.jingle.contents.map(function (content) {
+            if (content.application) {
+                return content.application.applicationType;
             }
         });
 
-        var matching = intersect(sess.pendingDescriptionTypes, descriptionTypes);
+        var matching = intersect(sess.pendingApplicationTypes, applicationTypes);
 
         return matching.length > 0;
     };
@@ -270,14 +270,14 @@ SessionManager.prototype.process = function (req) {
     var action = req.jingle.action;
     var contents = req.jingle.contents || [];
 
-    var descriptionTypes = contents.map(function (content) {
-        if (content.description) {
-            return content.description.descType;
+    var applicationTypes = contents.map(function (content) {
+        if (content.application) {
+            return content.application.applicationType;
         }
     });
     var transportTypes = contents.map(function (content) {
         if (content.transport) {
-            return content.transport.transType;
+            return content.transport.transportType;
         }
     });
 
@@ -353,7 +353,7 @@ SessionManager.prototype.process = function (req) {
     } else if (this.peers[sender] && this.peers[sender].length) {
         // Check if we need to have a tie breaker because we already have
         // a different session with this peer that is using the requested
-        // content description types.
+        // content application types.
         for (var i = 0, len = this.peers[sender].length; i < len; i++) {
             var sess = this.peers[sender][i];
             if (sess && sess.pending && sess.sid > sid && this.performTieBreak(sess, req)) {
@@ -381,7 +381,7 @@ SessionManager.prototype.process = function (req) {
             peerID: sender,
             initiator: false,
             parent: this,
-            descriptionTypes: descriptionTypes,
+            applicationTypes: applicationTypes,
             transportTypes: transportTypes,
             iceServers: this.iceServers,
             constraints: this.config.peerConnectionConstraints

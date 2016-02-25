@@ -155,8 +155,8 @@ test('Session-initiate after session accepted', function (t) {
             action: 'session-initiate',
             contents: [
                 {
-                    description: {descType: 'test'},
-                    transport: {transType: 'test'}
+                    application: {applicationType: 'test'},
+                    transport: {transportType: 'test'}
                 }
             ]
         }
@@ -244,8 +244,8 @@ test('Test new session with duplicate sid', function (t) {
             action: 'session-initiate',
             contents: [
                 {
-                    description: {descType: 'test'},
-                    transport: {transType: 'test'}
+                    application: {applicationType: 'test'},
+                    transport: {transportType: 'test'}
                 }
             ]
         }
@@ -291,8 +291,8 @@ test('Test bad actions', function (t) {
             action: 'welp',
             contents: [
                 {
-                    description: {descType: 'test'},
-                    transport: {transType: 'test'}
+                    application: {applicationType: 'test'},
+                    transport: {transportType: 'test'}
                 }
             ]
         }

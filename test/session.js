@@ -18,8 +18,8 @@ StubSession.prototype.start = function () {
     this.send('session-initiate', {
         contents: [
             {
-                description: {descType: 'stub'},
-                transport: {transType: 'stub'}
+                application: {applicationType: 'stub'},
+                transport: {transportType: 'stub'}
             }
         ]
     });
@@ -30,8 +30,8 @@ StubSession.prototype.accept = function () {
     this.send('session-accept', {
         contents: [
             {
-                description: {descType: 'stub'},
-                transport: {transType: 'stub'}
+                application: {applicationType: 'stub'},
+                transport: {transportType: 'stub'}
             }
         ]
     });
@@ -87,8 +87,8 @@ test('Test accepting base session', function (t) {
             action: 'session-initiate',
             contents: [
                 {
-                    description: {descType: 'test'},
-                    transport: {transType: 'test'}
+                    application: {applicationType: 'test'},
+                    transport: {transportType: 'test'}
                 }
             ]
         }
@@ -101,7 +101,7 @@ test('Test accepting stub session', function (t) {
     var jingle = new SessionManager({
         jid: 'zuser@example.com',
         prepareSession: function (meta) {
-            if (meta.descriptionTypes.indexOf('stub') >= 0) {
+            if (meta.applicationTypes.indexOf('stub') >= 0) {
                 return new StubSession(meta);
             }
         }
@@ -125,8 +125,8 @@ test('Test accepting stub session', function (t) {
                     action: 'session-accept',
                     contents: [
                         {
-                            description: {descType: 'stub'},
-                            transport: {transType: 'stub'}
+                            application: {applicationType: 'stub'},
+                            transport: {transportType: 'stub'}
                         }
                     ]
                 }
@@ -149,8 +149,8 @@ test('Test accepting stub session', function (t) {
             action: 'session-initiate',
             contents: [
                 {
-                    description: {descType: 'stub'},
-                    transport: {transType: 'stub'}
+                    application: {applicationType: 'stub'},
+                    transport: {transportType: 'stub'}
                 }
             ]
         }
@@ -201,8 +201,8 @@ test('Test starting stub session', function (t) {
                 action: 'session-initiate',
                 contents: [
                     {
-                        description: {descType: 'stub'},
-                        transport: {transType: 'stub'}
+                        application: {applicationType: 'stub'},
+                        transport: {transportType: 'stub'}
                     }
                 ]
             }
@@ -227,7 +227,7 @@ test('Test declining a session', function (t) {
     var jingle = new SessionManager({
         jid: 'zuser@example.com',
         prepareSession: function (meta) {
-            if (meta.descriptionTypes.indexOf('stub') >= 0) {
+            if (meta.applicationTypes.indexOf('stub') >= 0) {
                 return new StubSession(meta);
             }
         }
@@ -272,8 +272,8 @@ test('Test declining a session', function (t) {
             action: 'session-initiate',
             contents: [
                 {
-                    description: {descType: 'stub'},
-                    transport: {transType: 'stub'}
+                    application: {applicationType: 'stub'},
+                    transport: {transportType: 'stub'}
                 }
             ]
         }
@@ -303,8 +303,8 @@ test('Test cancelling a pending session', function (t) {
                     action: 'session-initiate',
                     contents: [
                         {
-                            description: {descType: 'stub'},
-                            transport: {transType: 'stub'}
+                            application: {applicationType: 'stub'},
+                            transport: {transportType: 'stub'}
                         }
                     ]
                 }

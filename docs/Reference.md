@@ -56,7 +56,7 @@ var jingle = new Jingle({
     - `peer` - The JID for the initiating peer (may be either a `{String}` or [`{JID}`](https://github.com/otalk/xmpp-jid)).
     - `peerID` - An alternative to `peer`, which MUST be a `{String}` (derived from `peer`).
     - `initiator` - This will always be `false`, as we are the one receiving the initiation request.
-    - `descriptionTypes` - An array of content description names.
+    - `applicationTypes` - An array of content application names.
     - `transportTypes` - An array of content transport names.
 - `req` - The original session initiation request, in case you need more information than provided in `opts` for selecting a session type.
 
@@ -72,7 +72,7 @@ new Jingle.Jingle({
     prepareSession: function (opts) {
         // Check if the session request includes "stub" content, and if so
         // create a custom StubSession.
-        if (opts.descriptionTypes.indexOf('stub') >= 0) {
+        if (opts.applicationTypes.indexOf('stub') >= 0) {
             return new StubSession(opts);
         }
     }
@@ -185,8 +185,8 @@ jingle.process({
         action: 'session-initiate',
         contents: [
             {
-                description: {descType: 'stub'},
-                transport: {transType: 'stub'}
+                application: {applicationType: 'stub'},
+                transport: {transportType: 'stub'}
             }
         ]
     }

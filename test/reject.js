@@ -53,8 +53,8 @@ test('Reject content-add by default', function (t) {
             action: 'content-add',
             contents: [
                 {
-                    description: {descType: 'test'},
-                    transport: {transType: 'test'}
+                    application: {applicationType: 'test'},
+                    transport: {transportType: 'test'}
                 }
             ]
         }
@@ -110,8 +110,8 @@ test('Reject transport-replace by default', function (t) {
             action: 'transport-replace',
             contents: [
                 {
-                    description: {descType: 'test'},
-                    transport: {transType: 'test'}
+                    application: {applicationType: 'test'},
+                    transport: {transportType: 'test'}
                 }
             ]
         }

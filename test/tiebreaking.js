@@ -19,7 +19,7 @@ test('Test tie-break from duplicate sids', function (t) {
     jingle.addSession(sess);
 
     sess.state = 'pending';
-    sess.pendingDescriptionTypes = ['test'];
+    sess.pendingApplicationTypes = ['test'];
 
     jingle.on('send', function (data) {
         t.same(data, {
@@ -44,8 +44,8 @@ test('Test tie-break from duplicate sids', function (t) {
             action: 'session-initiate',
             contents: [
                 {
-                    description: {descType: 'test'},
-                    transport: {transType: 'test'}
+                    application: {applicationType: 'test'},
+                    transport: {transportType: 'test'}
                 }
             ]
         }
@@ -62,7 +62,7 @@ test('Test tie-break from existing session', function (t) {
     var sess = new GenericSession({
         sid: 'sid999',
         peer: 'peer@example.com',
-        descriptionTypes: ['othertest']
+        applicationTypes: ['othertest']
     });
     jingle.addSession(sess);
     sess.state = 'pending';
@@ -70,7 +70,7 @@ test('Test tie-break from existing session', function (t) {
     var sess2 = new GenericSession({
         sid: 'sid998',
         peer: 'peer@example.com',
-        descriptionTypes: ['test']
+        applicationTypes: ['test']
     });
     jingle.addSession(sess2);
     sess2.state = 'pending';
@@ -99,8 +99,8 @@ test('Test tie-break from existing session', function (t) {
             action: 'session-initiate',
             contents: [
                 {
-                    description: {descType: 'test'},
-                    transport: {transType: 'test'}
+                    application: {applicationType: 'test'},
+                    transport: {transportType: 'test'}
                 }
             ]
         }
@@ -150,8 +150,8 @@ test('Test tie-break from pending action', function (t) {
             action: 'content-modify',
             contents: [
                 {
-                    description: {descType: 'test'},
-                    transport: {transType: 'test'}
+                    application: {applicationType: 'test'},
+                    transport: {transportType: 'test'}
                 }
             ]
         }
