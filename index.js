@@ -247,7 +247,6 @@ SessionManager.prototype.process = function (req) {
     var rid = req.id;
     var sender = req.from.full || req.from;
 
-
     if (req.type === 'error') {
         var isTieBreak = req.error && req.error.jingleCondition === 'tie-break';
         if (session && session.pending && isTieBreak) {
@@ -293,6 +292,11 @@ SessionManager.prototype.process = function (req) {
                 condition: 'item-not-found',
                 jingleCondition: 'unknown-session'
             });
+        }
+
+        // Check if the sender is a more specific peer Id (i.e., full jid vs bare jid)
+        if (sender.indexOf(session.peerID) === 0 && session.peerID !== sender) {
+            session.peerID = sender;
         }
 
         // Check if someone is trying to hijack a session.
