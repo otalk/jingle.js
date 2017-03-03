@@ -1,7 +1,6 @@
 var util = require('util');
 var intersect = require('intersect');
 var WildEmitter = require('wildemitter');
-var webrtc = require('webrtcsupport');
 
 var BaseSession = require('jingle-session');
 var MediaSession = require('jingle-media-session');
@@ -39,31 +38,6 @@ function SessionManager(conf) {
 
         return matching.length > 0;
     };
-
-    this.screenSharingSupport = webrtc.screenSharing;
-
-    this.capabilities = [
-        'urn:xmpp:jingle:1'
-    ];
-    if (webrtc.support) {
-        this.capabilities = [
-            'urn:xmpp:jingle:1',
-            'urn:xmpp:jingle:apps:rtp:1',
-            'urn:xmpp:jingle:apps:rtp:audio',
-            'urn:xmpp:jingle:apps:rtp:video',
-            'urn:xmpp:jingle:apps:rtp:rtcb-fb:0',
-            'urn:xmpp:jingle:apps:rtp:rtp-hdrext:0',
-            'urn:xmpp:jingle:apps:rtp:ssma:0',
-            'urn:xmpp:jingle:apps:dtls:0',
-            'urn:xmpp:jingle:apps:grouping:0',
-            'urn:xmpp:jingle:apps:file-transfer:3',
-            'urn:xmpp:jingle:transports:ice-udp:1',
-            'urn:xmpp:jingle:transports.dtls-sctp:1',
-            'urn:ietf:rfc:3264',
-            'urn:ietf:rfc:5576',
-            'urn:ietf:rfc:5888'
-        ];
-    }
 
     this.config = {
         debug: false,

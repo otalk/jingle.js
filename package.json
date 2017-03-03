@@ -14,7 +14,6 @@
     "jingle-filetransfer-session": "^2.0.0",
     "jingle-media-session": "^2.0.0",
     "jingle-session": "^2.0.0",
-    "webrtcsupport": "^1.1.0",
     "wildemitter": "^1.0.1"
   },
   "devDependencies": {
