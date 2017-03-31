@@ -74,7 +74,7 @@ SessionManager.prototype.addICEServer = function (server) {
     //    [credential: '']
     // }
     if (typeof server === 'string') {
-        server = {url: server};
+        server = {urls: server};
     }
     this.iceServers.push(server);
 };
