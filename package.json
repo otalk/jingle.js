@@ -44,6 +44,7 @@
   "scripts": {
     "audit": "make audit",
     "build": "make build",
+    "test": "jshint .",
     "test-travis": "test/run-tests"
   },
   "testling": {
