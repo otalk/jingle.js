@@ -151,7 +151,8 @@ SessionManager.prototype.createFileTransferSession = function (peer, sid) {
         sid: sid,
         peer: peer,
         initiator: true,
-        parent: this
+        parent: this,
+        iceServers: this.iceServers
     });
 
     this.addSession(session);
