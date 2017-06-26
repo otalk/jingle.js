@@ -58,6 +58,7 @@ test('Test accepting base session', function (t) {
             // The GenericSession instance doesn't allow for accepting
             // sessions, so we'll test that we successfully terminated
             // the session instead.
+            delete data.id;
             t.same(data, {
                 to: 'peer@example.com',
                 type: 'set',
@@ -117,6 +118,7 @@ test('Test accepting stub session', function (t) {
             });
             sentResult = true;
         } else {
+            delete data.id;
             t.same(data, {
                 to: 'peer@example.com',
                 type: 'set',
@@ -193,6 +195,7 @@ test('Test starting stub session', function (t) {
     });
 
     jingle.on('send', function (data) {
+        delete data.id;
         t.same(data, {
             to: 'peer@example.com',
             type: 'set',
@@ -243,6 +246,7 @@ test('Test declining a session', function (t) {
             });
             sentResult = true;
         } else {
+            delete data.id;
             t.same(data, {
                 to: 'peer@example.com',
                 type: 'set',
@@ -294,6 +298,7 @@ test('Test cancelling a pending session', function (t) {
 
     var started = false;
     jingle.on('send', function (data) {
+        delete data.id;
         if (!started) {
             t.same(data, {
                 to: 'peer@example.com',
@@ -347,6 +352,7 @@ test('Test ending a session (successful session)', function (t) {
     sess.state = 'active';
 
     jingle.on('send', function (data) {
+        delete data.id;
         t.same(data, {
             to: 'peer@example.com',
             type: 'set',
@@ -386,6 +392,7 @@ test('Test ending a session (non-successful session)', function (t) {
     sess.state = 'active';
 
     jingle.on('send', function (data) {
+        delete data.id;
         t.same(data, {
             to: 'peer@example.com',
             type: 'set',

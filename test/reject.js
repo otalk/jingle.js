@@ -28,6 +28,7 @@ test('Reject content-add by default', function (t) {
             });
             sentResult = true;
         } else {
+            delete data.id;
             t.same(data, {
                 to: 'peer@example.com',
                 type: 'set',
@@ -85,6 +86,7 @@ test('Reject transport-replace by default', function (t) {
             });
             sentResult = true;
         } else {
+            delete data.id;
             t.same(data, {
                 to: 'peer@example.com',
                 type: 'set',
