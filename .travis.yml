@@ -1,7 +1,12 @@
-sudo: false
+dist: trusty
 language: node_js
 node_js:
-- 0.10
+- 6
+
+addons:
+  apt:
+    packages:
+      - pulseaudio
 
 env:
   matrix:
@@ -24,6 +29,7 @@ before_script:
   - ./node_modules/travis-multirunner/setup.sh
   - export DISPLAY=:99.0
   - sh -e /etc/init.d/xvfb start
+  - pulseaudio --start
 
 after_failure:
   - for file in *.log; do echo $file; echo "======================"; cat $file; done || true
