@@ -179,7 +179,7 @@ test('Add ICE server as just a string', function (t) {
     jingle.addICEServer('turn:example.com');
    
     t.same(jingle.iceServers, [
-        {url: 'turn:example.com'}
+        {urls: 'turn:example.com'}
     ]);
 
     t.end();
