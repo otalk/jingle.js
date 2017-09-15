@@ -288,16 +288,20 @@ SessionManager.prototype.process = function (req) {
             });
         }
 
+        // pendingAction is broken, especially with stanza.io where result IQs are not processed
+        // and they don't mark pendingAction=false on session object when we're switching streams.
+        // Some info can be found here: https://github.com/otalk/jingle.js/issues/34
+        // 
         // Can't process two requests at once, need to tie break
-        if (action !== 'session-terminate' && action === session.pendingAction) {
-            this._log('error', 'Tie break during pending request');
-            if (session.isInitiator) {
-                return this._sendError(sender, rid, {
-                    condition: 'conflict',
-                    jingleCondition: 'tie-break'
-                });
-            }
-        }
+        // if (action !== 'session-terminate' && action === session.pendingAction) {
+        //     this._log('error', 'Tie break during pending request');
+        //     if (session.isInitiator) {
+        //         return this._sendError(sender, rid, {
+        //             condition: 'conflict',
+        //             jingleCondition: 'tie-break'
+        //         });
+        //     }
+        // }
     } else if (session) {
         // Don't accept a new session if we already have one.
         if (session.peerID !== sender) {
