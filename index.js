@@ -4,7 +4,7 @@ var WildEmitter = require('wildemitter');
 
 var BaseSession = require('jingle-session');
 var MediaSession = require('jingle-media-session');
-var FileSession = require('jingle-filetransfer-session');
+// var FileSession = require('jingle-filetransfer-session');
 
 
 function SessionManager(conf) {
@@ -22,9 +22,9 @@ function SessionManager(conf) {
         if (opts.applicationTypes.indexOf('rtp') >= 0) {
             return new MediaSession(opts);
         }
-        if (opts.applicationTypes.indexOf('filetransfer') >= 0) {
-            return new FileSession(opts);
-        }
+        // if (opts.applicationTypes.indexOf('filetransfer') >= 0) {
+        //     return new FileSession(opts);
+        // }
     };
 
     this.performTieBreak = conf.performTieBreak || function (sess, req) {
@@ -147,17 +147,18 @@ SessionManager.prototype.createMediaSession = function (peer, sid, stream) {
 };
 
 SessionManager.prototype.createFileTransferSession = function (peer, sid) {
-    var session = new FileSession({
-        sid: sid,
-        peer: peer,
-        initiator: true,
-        parent: this,
-        iceServers: this.iceServers
-    });
+    window.console.error('FileSession is not included in this lib, please check the jingle.js dependencies.');
+    // var session = new FileSession({
+    //     sid: sid,
+    //     peer: peer,
+    //     initiator: true,
+    //     parent: this,
+    //     iceServers: this.iceServers
+    // });
 
-    this.addSession(session);
+    // this.addSession(session);
 
-    return session;
+    // return session;
 };
 
 SessionManager.prototype.endPeerSessions = function (peer, reason, silent) {

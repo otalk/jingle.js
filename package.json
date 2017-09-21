@@ -11,7 +11,6 @@
   "dependencies": {
     "extend-object": "^1.0.0",
     "intersect": "^0.1.0",
-    "jingle-filetransfer-session": "^2.0.0",
     "jingle-media-session": "github:konradkierus/jingle-media-session",
     "jingle-session": "^2.0.1",
     "wildemitter": "^1.0.1"
@@ -19,6 +18,7 @@
   "devDependencies": {
     "browserify": "^7.0.2",
     "covert": "^1.0.0",
+    "jingle-filetransfer-session": "^2.0.0",
     "jshint": "^2.5.5",
     "nsp": "^0.5.2",
     "precommit-hook": "^1.0.7",
