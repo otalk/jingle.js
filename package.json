@@ -12,7 +12,7 @@
     "extend-object": "^1.0.0",
     "intersect": "^0.1.0",
     "jingle-media-session": "github:konradkierus/jingle-media-session",
-    "jingle-session": "^2.0.1",
+    "jingle-session": "github:konradkierus/jingle-session",
     "wildemitter": "^1.0.1"
   },
   "devDependencies": {
