@@ -79,6 +79,13 @@ SessionManager.prototype.addICEServer = function (server) {
     this.iceServers.push(server);
 };
 
+SessionManager.prototype.replaceICEServers = function (serversList) {
+    if (typeof serversList === 'string') {
+        serversList = [{urls: serversList}];
+    }
+    this.iceServers = serversList;
+}
+
 SessionManager.prototype.addSession = function (session) {
     var self = this;
 
