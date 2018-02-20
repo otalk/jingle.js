@@ -271,6 +271,11 @@ SessionManager.prototype.process = function (req) {
             });
         }
 
+        // Check if the sender is a more specific peer Id (i.e., full jid vs bare jid)
+        if (session.peerID.indexOf(sender) === 0 && session.peerID !== sender) {
+            session.peerID = sender;
+        }
+
         // Check if someone is trying to hijack a session.
         if (session.peerID !== sender || session.ended) {
             this._log('error', 'Session has ended, or action has wrong sender');
