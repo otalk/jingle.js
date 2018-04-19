@@ -1,6 +1,5 @@
 var test = require('tape');
 var SessionManager = require('../');
-var adapter = require('webrtc-adapter-test'); // jshint ignore:line
 
 function setupSessionManagers() {
     var jingleA = new SessionManager({
