@@ -4,7 +4,7 @@ var WildEmitter = require('wildemitter');
 
 var BaseSession = require('jingle-session');
 var MediaSession = require('jingle-media-session');
-var FileSession = require('jingle-filetransfer-session');
+// var FileSession = require('jingle-filetransfer-session');
 
 
 function SessionManager(conf) {
@@ -22,9 +22,9 @@ function SessionManager(conf) {
         if (opts.applicationTypes.indexOf('rtp') >= 0) {
             return new MediaSession(opts);
         }
-        if (opts.applicationTypes.indexOf('filetransfer') >= 0) {
-            return new FileSession(opts);
-        }
+        // if (opts.applicationTypes.indexOf('filetransfer') >= 0) {
+        //     return new FileSession(opts);
+        // }
     };
 
     this.performTieBreak = conf.performTieBreak || function (sess, req) {
@@ -78,6 +78,13 @@ SessionManager.prototype.addICEServer = function (server) {
     }
     this.iceServers.push(server);
 };
+
+SessionManager.prototype.replaceICEServers = function (serversList) {
+    if (typeof serversList === 'string') {
+        serversList = [{urls: serversList}];
+    }
+    this.iceServers = serversList;
+}
 
 SessionManager.prototype.addSession = function (session) {
     var self = this;
@@ -147,17 +154,18 @@ SessionManager.prototype.createMediaSession = function (peer, sid, stream) {
 };
 
 SessionManager.prototype.createFileTransferSession = function (peer, sid) {
-    var session = new FileSession({
-        sid: sid,
-        peer: peer,
-        initiator: true,
-        parent: this,
-        iceServers: this.iceServers
-    });
+    window.console.error('FileSession is not included in this lib, please check the jingle.js dependencies.');
+    // var session = new FileSession({
+    //     sid: sid,
+    //     peer: peer,
+    //     initiator: true,
+    //     parent: this,
+    //     iceServers: this.iceServers
+    // });
 
-    this.addSession(session);
+    // this.addSession(session);
 
-    return session;
+    // return session;
 };
 
 SessionManager.prototype.endPeerSessions = function (peer, reason, silent) {
@@ -270,6 +278,11 @@ SessionManager.prototype.process = function (req) {
             });
         }
 
+        // Check if the sender is a more specific peer Id (i.e., full jid vs bare jid)
+        if (session.peerID.indexOf(sender) === 0 && session.peerID !== sender) {
+            session.peerID = sender;
+        }
+
         // Check if someone is trying to hijack a session.
         if (session.peerID !== sender || session.ended) {
             this._log('error', 'Session has ended, or action has wrong sender');
@@ -288,16 +301,20 @@ SessionManager.prototype.process = function (req) {
             });
         }
 
+        // pendingAction is broken, especially with stanza.io where result IQs are not processed
+        // and they don't mark pendingAction=false on session object when we're switching streams.
+        // Some info can be found here: https://github.com/otalk/jingle.js/issues/34
+        // 
         // Can't process two requests at once, need to tie break
-        if (action !== 'session-terminate' && action === session.pendingAction) {
-            this._log('error', 'Tie break during pending request');
-            if (session.isInitiator) {
-                return this._sendError(sender, rid, {
-                    condition: 'conflict',
-                    jingleCondition: 'tie-break'
-                });
-            }
-        }
+        // if (action !== 'session-terminate' && action === session.pendingAction) {
+        //     this._log('error', 'Tie break during pending request');
+        //     if (session.isInitiator) {
+        //         return this._sendError(sender, rid, {
+        //             condition: 'conflict',
+        //             jingleCondition: 'tie-break'
+        //         });
+        //     }
+        // }
     } else if (session) {
         // Don't accept a new session if we already have one.
         if (session.peerID !== sender) {
